@@ -26,9 +26,10 @@ public class Controller
     
     private final static Integrante integranteNG = new Integrante("Nicolas", "Grossi");
     private final static Integrante integranteDM = new Integrante("Diego", "Molinaro");
-    private final static Integrante integranteJM = new Integrante("Jorge", "Muller");
+    private final static Integrante integranteAV = new Integrante("Alejando", "Vergani");
     private final static Integrante integranteJL = new Integrante("Jorge", "Lamperti");
     private final static Integrante integranteES = new Integrante("Esteban", "Sosa");
+    private final static Integrante integranteDC = new Integrante("Diego", "Cejas");
         
     private static void armarTeams()
     {
@@ -36,11 +37,12 @@ public class Controller
         grupoA.addIntegrante(integranteDM);
         grupoA.setupRutina(rutinaA);
         
-        grupoB.addIntegrante(integranteJM);
+        grupoB.addIntegrante(integranteAV);
         grupoB.addIntegrante(integranteJL);
         grupoB.setupRutina(rutinaB);
         
         grupoC.addIntegrante(integranteES);
+        grupoC.addIntegrante(integranteDC);
         grupoC.setupRutina(rutinaC);
         
         arrDeGrupos.add(grupoA);
