@@ -34,7 +34,19 @@
             
             <!-- CALENDARIO NOC:-->
             <div class="calendarioNoc">
-                {{calendarioNOC}}
+                
+                <div class="semana" ng-repeat="semana in calendarioNOC.semanas" >
+                    
+                    <div class="dias" ng-repeat="dia in semana.dias" ng-class="{true:'dia-mes-pasado', false:'dia-mes-actual'}[dia.esDelMesPasado]">
+                        <div class="encabezado-dia">
+                            {{dia.diaDeLaSemana}}
+                            {{dia.numeroMes}}
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                
             </div>
                 
         </div>
@@ -104,6 +116,32 @@
             overflow: hidden;
             background-color: #1abc9c;
             color: white;
+        }
+    </style>
+    <style>
+        .semana
+        {
+            //border:solid 2px red;
+        }
+        .dias
+        {
+            //border:solid 1px grey;
+            display: inline-block;
+            overflow: hidden;
+            width: calc(100% / 7 );
+            height: 200px;
+        }
+        .dia-mes-pasado
+        {
+            background-color: lightgray;
+        }
+        .encabezado-dia
+        {
+            text-align: center;
+            width: 100%;
+            color:white;
+            background-color: #e67e22;
+            padding: 12px;
         }
     </style>
 </html>   

@@ -41,11 +41,10 @@ app.controller('calendario', function($scope, $http)
         {
             $.ajax(
             {
-                url:"../../calendarioNoc",
+                url:"../../formatoCalendario",
                 data:
                 {
-                    "mes":$scope.hoy.mes,    
-                    "year":$scope.hoy.year   
+                    "mesParametro":$scope.hoy.mes  
                 },
                 beforeSend: function (xhr) 
                 {
