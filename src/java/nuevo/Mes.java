@@ -47,15 +47,11 @@ public class Mes {
         return nombreMes;
     }
 
-    public String getAcronimoMes() 
-    {
-        acronimoMes = getNombreMes().substring(0,3);
+    public String getAcronimoMes() {
         return acronimoMes;
     }
 
-    public void setAcronimoMes(String acronimoMes) {
-        this.acronimoMes = acronimoMes;
-    }
+
     
 
     public List<Semana> getSemanas() {

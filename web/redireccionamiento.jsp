@@ -1,3 +1,3 @@
 <%
-response.sendRedirect("pages/calendar/calendar.jsp");
+response.sendRedirect("pages/nvo-calendar/nvo-calendar.jsp");
 %>

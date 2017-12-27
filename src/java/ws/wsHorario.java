@@ -28,7 +28,7 @@ public class wsHorario {
             final Date date = format.parse(str);
             final Calendar calendar = Calendar.getInstance();
             calendar.setTime(date);
-            calendar.add(Calendar.DAY_OF_YEAR, contadorAumento);
+            calendar.add(Calendar.MONTH, contadorAumento);
             
             
             //hoy = format.format(calendar.getTime());
@@ -45,15 +45,20 @@ public class wsHorario {
     }
     
     @RequestMapping(value="formatoCalendario")
-    public static nuevo.Mes formatoCalendario(int mesParametro)
+    public static nuevo.Mes formatoCalendario(int mesParametro ,int anioParametro)
     {
+        
         nuevo.Mes mesAux = new nuevo.Mes(mesParametro -1);
+        
+        // 1 - CREO UN CALENDARIO:
         Calendar cal = Calendar.getInstance();
-        Date hoy = new Date();
+        Date hoy = new Date((anioParametro - 1900), (mesParametro -1) , 1);
         cal.setTime(hoy);
+        
+        
         int cantSemanasMes = cal.getActualMaximum(Calendar.WEEK_OF_MONTH);
         int cantDiasMes = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
-        System.out.println("cantidad Semanas mes(" + (hoy.getMonth() +1)  +"/" + (hoy.getYear() + 1900) +"): " + cantSemanasMes + " " + cantDiasMes);
+        System.out.println("El mes (" + (hoy.getMonth() +1)  +"/" + (hoy.getYear() + 1900) +") tiene " + cantSemanasMes + " semanas y " + cantDiasMes + " dias");
         
         
         String formatoSemana[] = {"Lunes","Martes","Miercoles","Jueves","Viernes","Sabado","Domingo"};
@@ -66,51 +71,56 @@ public class wsHorario {
         int yearFormateado = year + 1900;
         
         
-        for(int s = 0 ; s < cantSemanasMes ;s ++)//cantSemanasMes
+        System.out.println("cantidad de semanas del mes: " + cantSemanasMes);
+        
+        boolean comenzo = false;
+        int corrimiento = 0;
+        
+        // 1 -  RECORRO TODAS LAS SEMANAS DEL MES:
+        for(int semanaLoop = 0 ; semanaLoop < cantSemanasMes ;semanaLoop ++)//cantSemanasMes
         {
-            System.out.println("semana " + s);
+            System.out.println("semana loop " + semanaLoop);
             Semana semanaAux = new Semana();
             
-            for(int f = 0; f < formatoSemana.length; f++)
+            // 2 - VOY GENERANDO CADA DIA DE CADA SEMANA:
+            for(int indiceDiaDeLaSemana = 0; indiceDiaDeLaSemana < formatoSemana.length; indiceDiaDeLaSemana++)
             {
-                int resta = 0;
                 
-                
-                nuevo.Dia diaAux;
-                
-                do
+                int diaDeLaSemana = ( semanaLoop * 7) + indiceDiaDeLaSemana - corrimiento;
+                Date dateDelDiaLaboral = new Date(year , mes , diaDeLaSemana);
+                if(!comenzo)
                 {
-                    if(s == 0)
+                    System.out.println("dia de la semana que empieza el mes = " +  dateDelDiaLaboral + " corrimiento: " + dateDelDiaLaboral.getDay());
+                    comenzo = true;
+                    corrimiento  = ( dateDelDiaLaboral.getDay() -1 );
+                    diaDeLaSemana = ( semanaLoop * 7) + (indiceDiaDeLaSemana - corrimiento);
+                    dateDelDiaLaboral = new Date(year , mes , diaDeLaSemana);
+                }
+                
+                nuevo.Dia diaLaboral = diaLaboral = new nuevo.Dia( dateDelDiaLaboral );
+                
+                
+                if ( dateDelDiaLaboral.getMonth() != hoy.getMonth())
+                {
+                    diaLaboral.setEsDelMesPasado(true);
+                    if(semanaLoop == 0)
                     {
-                        int chota =(s*f) + f - resta;
-                        Date d = new Date(year,mes, chota);
-                        diaAux = new nuevo.Dia(d);
-                        if (d.getMonth() != hoy.getMonth())
-                        {
-                            diaAux.setEsDelMesPasado(true);
-                        }
-                        
-                        System.out.println("semana "+ s +" " + chota + " " + formatoSemana[f]);
+                        diaLaboral.setMes(mes-1);
+                        diaLaboral.setStrMes(resolverNombreMes(mes-1));
                     }
                     else
                     {
-                        int chota = (s*7) + f + resta;
-                        Date d = new Date(year,mes, chota);
-                        diaAux = new nuevo.Dia(d);
-                        if (d.getMonth() != hoy.getMonth())
-                        {
-                            diaAux.setEsDelMesPasado(true);
-                        }
-                        System.out.println("semana "+ s +" " + chota + " " + formatoSemana[f]);
+                        diaLaboral.setMes(mes+1);
+                        diaLaboral.setStrMes(resolverNombreMes(mes+1));
                     }
-                    
-                    
-                    resta++;
-                    
                 }
-                while(!diaAux.getDiaDeLaSemana().equalsIgnoreCase(formatoSemana[f]));
-                System.out.println(diaAux);
-                semanaAux.addDiaALaSemana(diaAux);
+                else
+                {
+                    diaLaboral.setMes(mes);
+                    diaLaboral.setStrMes(resolverNombreMes(mes));
+                }
+                
+                semanaAux.addDiaALaSemana(diaLaboral);
             }
                 
                 
@@ -121,5 +131,27 @@ public class wsHorario {
         
         
         return mesAux;
+    }
+    public static String resolverNombreMes(int mes)
+    {
+        String nombreMes = "";
+        switch(mes)
+        {
+            case -1: nombreMes = "Diciembre";break;
+            case 0: nombreMes = "Enero";break;
+            case 1: nombreMes = "Febrero";break;
+            case 2: nombreMes = "Marzo";break;
+            case 3: nombreMes = "Abril";break;
+            case 4: nombreMes = "Mayo";break;
+            case 5: nombreMes = "Junio";break;
+            case 6: nombreMes = "Julio";break;
+            case 7: nombreMes = "Agosto";break;
+            case 8: nombreMes = "Setiembre";break;
+            case 9: nombreMes = "Octubre";break;
+            case 10: nombreMes = "Noviembre";break;
+            case 11: nombreMes = "Diciembre";break;
+            case 12: nombreMes = "Enero"; break;
+        }  
+        return nombreMes;
     }
 }

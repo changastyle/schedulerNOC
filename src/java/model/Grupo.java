@@ -60,6 +60,15 @@ public class Grupo
             this.rutina.add(arr[i]);
         }
     }
+
+    public String getNombreGrupo() {
+        return nombreGrupo;
+    }
+
+    public void setNombreGrupo(String nombreGrupo) {
+        this.nombreGrupo = nombreGrupo;
+    }
+    
     public String toString()
     {
         return this.nombreGrupo;

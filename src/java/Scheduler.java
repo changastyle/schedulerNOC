@@ -11,7 +11,7 @@ public class Scheduler
     {
         //System.out.println(Controller.resolverMes(1, 2016));
         Dia d = new Dia(23, 5, 2016);
-       Controller.calcular(d);
+       //Controller.calcular(d);
         System.out.println(d);
         
     }

@@ -8,7 +8,7 @@ import model.Grupo;
 import java.util.ArrayList;
 import java.util.Date;
 import model.FechaRespuesta;
-import util.Dia;
+import nuevo.Dia;
 
 public class Controller
 {
@@ -20,16 +20,16 @@ public class Controller
     private final static int rutinaB[] = {1,1,2,2,0,0,0,2,2,0,0,1,1,4,0,0,1,1,2,2,0};
     private final static int rutinaC[] = {0,0,1,1,1,1,0,1,1,1,1,0,0,0,1,1,0,0,1,1,4};
     
-    private static Grupo grupoA = new Grupo("grupoA");
-    private static Grupo grupoB = new Grupo("grupoB");
-    private static Grupo grupoC = new Grupo("grupoC");
+    private static Grupo grupoA = new Grupo("A");
+    private static Grupo grupoB = new Grupo("B");
+    private static Grupo grupoC = new Grupo("C");
     
-    private final static Integrante integranteNG = new Integrante("Nicolas", "Grossi");
-    private final static Integrante integranteDM = new Integrante("Diego", "Molinaro");
-    private final static Integrante integranteAV = new Integrante("Alejando", "Vergani");
+    private final static Integrante integranteNG = new Integrante("Nico", "Grossi");
+    private final static Integrante integranteDM = new Integrante("Diego M", "Molinaro");
+    private final static Integrante integranteAV = new Integrante("Ale", "Vergani");
     private final static Integrante integranteJL = new Integrante("Jorge", "Lamperti");
     private final static Integrante integranteES = new Integrante("Esteban", "Sosa");
-    private final static Integrante integranteDC = new Integrante("Diego", "Cejas");
+    private final static Integrante integranteDC = new Integrante("Diego C", "Cejas");
         
     private static void armarTeams()
     {
@@ -57,24 +57,36 @@ public class Controller
         
         mesRespuesta = new Mes(numeroMes, year);
         
-        for(Dia d : mesRespuesta.getArrDiasDelMes())
+       /* for(Dia d : mesRespuesta.getArrDiasDelMes())
         {
             calcular(d);
-        }
+        }*/
         
         return mesRespuesta;
     }
     
-    public static void calcular(Dia hoy)
+    public static void calcular(nuevo.Dia hoy)
     {
-        armarTeams();
-            
-        if(hoy.timestamp() > fechaPivot.getTime())
+        if(arrDeGrupos != null)
         {
-            long distancia = (hoy.timestamp() - fechaPivot.getTime()) / (3600 * 1000 * 24);
+            if(arrDeGrupos.size() < 3)
+            {
+                armarTeams();
+            }
+        }
+        else
+        {
+            armarTeams();
+        }
+        
+        
+            
+        if(hoy.getDate().getTime() > fechaPivot.getTime())
+        {
+            long distancia = (hoy.getDate().getTime() - fechaPivot.getTime()) / (3600 * 1000 * 24);
             
             
-            while(distancia > 21)
+            while(distancia >= 21)
             {
                 distancia -= 21;
             }
@@ -82,24 +94,24 @@ public class Controller
             int dis = (int) distancia;
             
             //DOMINGO:
-            if(hoy.isDomingo())
+            if(hoy.isEsDomingo())
             {
                 for(Grupo grupo : arrDeGrupos)
                 {
                     if(grupo.getRutina().get(dis) == 4)
                     {
-                       hoy.setGrupoMañanero(grupo);
+                       hoy.setGrupoMananero(grupo);
                        hoy.setGrupoTarde(grupo);
                        break;
                     }
                 }
-                if( hoy.getGrupoMañanero().equals(null) )
+                /*if( hoy.getGrupoMañanero().equals(null) )
                 {
                     System.out.println("" + hoy );
-                }
+                }*/
             }
             //DIA NO DOMINGO:
-            else if( !hoy.isDomingo() )
+            else if( !hoy.isEsDomingo() )
             {
                 boolean encontreM = false, encontreT  = false;
                 
@@ -107,7 +119,7 @@ public class Controller
                 {
                    if(grupo.getRutina().get(dis) == 1)
                    {
-                       hoy.setGrupoMañanero(grupo);
+                       hoy.setGrupoMananero(grupo);
                        encontreM = true;
                        if(encontreT)
                        {
@@ -124,10 +136,10 @@ public class Controller
                        }
                    } 
                 }
-                if(hoy.getGrupoMañanero().equals(null))
+/*                if(hoy.getGrupoMañanero().equals(null))
                 {
                     System.out.println("hoy:" + hoy);
-                }
+                }*/
             }
         } 
         else
