@@ -6,18 +6,21 @@ import java.util.ArrayList;
 
 public class Grupo
 {
+    private int id;
     private java.util.ArrayList<Integrante> integrantes;
     private java.util.ArrayList<Integer> rutina;
     private String nombreGrupo;
     
-    public Grupo(String nombreGrupo)
+    public Grupo(int id, String nombreGrupo)
     {
+        this.id = id;
         this.nombreGrupo = nombreGrupo;
         rutina = new java.util.ArrayList<Integer>();
         integrantes = new java.util.ArrayList<Integrante>();
     }
-    public Grupo(String nombreGrupo, ArrayList<Integrante> integrantes, ArrayList<Integer> rutina)
+    public Grupo(int id, String nombreGrupo, ArrayList<Integrante> integrantes, ArrayList<Integer> rutina)
     {
+        this.id = id;
         this.nombreGrupo = nombreGrupo;
         this.integrantes = integrantes;
         this.rutina = rutina;
@@ -102,4 +105,13 @@ public class Grupo
         
         return gson.toJson(this);
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+    
 }

@@ -7,6 +7,7 @@ import model.Integrante;
 import model.Grupo;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import model.FechaRespuesta;
 import nuevo.Dia;
 
@@ -20,34 +21,42 @@ public class Controller
     private final static int rutinaB[] = {1,1,2,2,0,0,0,2,2,0,0,1,1,4,0,0,1,1,2,2,0};
     private final static int rutinaC[] = {0,0,1,1,1,1,0,1,1,1,1,0,0,0,1,1,0,0,1,1,4};
     
-    private static Grupo grupoA = new Grupo("A");
-    private static Grupo grupoB = new Grupo("B");
-    private static Grupo grupoC = new Grupo("C");
+    private static Grupo grupoA;
+    private static Grupo grupoB;
+    private static Grupo grupoC;
     
     private final static Integrante integranteNG = new Integrante("Nico", "Grossi");
-    private final static Integrante integranteDM = new Integrante("Diego M", "Molinaro");
-    private final static Integrante integranteAV = new Integrante("Ale", "Vergani");
+    private final static Integrante integranteDM = new Integrante("Diego", "Molinaro");
+//    private final static Integrante integranteAV = new Integrante("Ale", "Vergani");
     private final static Integrante integranteJL = new Integrante("Jorge", "Lamperti");
-    private final static Integrante integranteES = new Integrante("Esteban", "Sosa");
-    private final static Integrante integranteDC = new Integrante("Diego C", "Cejas");
+//    private final static Integrante integranteES = new Integrante("Esteban", "Sosa");
+    private final static Integrante integranteDC = new Integrante("Diego", "Cejas");
         
-    private static void armarTeams()
+    public static List<Grupo> armarTeams()
     {
-        grupoA.addIntegrante(integranteNG);
+        arrDeGrupos = new ArrayList<>();
+        
+        grupoA = new Grupo(1, "A");
+        grupoB = new Grupo(2, "B");
+        grupoC = new Grupo(3, "C");
+        
         grupoA.addIntegrante(integranteDM);
         grupoA.setupRutina(rutinaA);
         
-        grupoB.addIntegrante(integranteAV);
+//        grupoB.addIntegrante(integranteAV);
         grupoB.addIntegrante(integranteJL);
+        grupoB.addIntegrante(integranteNG);
         grupoB.setupRutina(rutinaB);
         
-        grupoC.addIntegrante(integranteES);
+//        grupoC.addIntegrante(integranteES);
         grupoC.addIntegrante(integranteDC);
         grupoC.setupRutina(rutinaC);
         
         arrDeGrupos.add(grupoA);
         arrDeGrupos.add(grupoB);
         arrDeGrupos.add(grupoC);
+        
+        return arrDeGrupos;
         
     }
     

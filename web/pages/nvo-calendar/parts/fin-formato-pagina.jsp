@@ -6,26 +6,19 @@
     </div>
     <div class="panel-body contenedor-listado-grupos">
         <ul class="list-group">
-            <li class="list-group-item" ng-class="{'A':'grupo-seleccionado'}[grupoSeleccionado]" ng-click="seleccionarGrupo('A')">
-                <span class="negrita-r"> Grupo A</span>
-                <br>
-                Diego M
-                <br>
-                Nico
-            </li>
-            <li class="list-group-item" ng-class="{'B':'grupo-seleccionado'}[grupoSeleccionado]" ng-click="seleccionarGrupo('B')">
-                <span class="negrita-r"> Grupo B</span>
-                <br>
-                Jorge
-                <br>
-                Ale
-            </li>
-            <li class="list-group-item" ng-class="{'C':'grupo-seleccionado'}[grupoSeleccionado]" ng-click="seleccionarGrupo('C')">
-                <span class="negrita-r"> Grupo C</span>
-                <br>
-                Esteban 
-                <br>
-                Diego C
+            <li class="list-group-item" 
+                ng-class="{'true':'grupo-seleccionado'}[grupoSeleccionado.id == grupo.id]"
+                ng-repeat="grupo in arrGrupos" 
+                ng-click="seleccionarGrupo(grupo)">
+                <span class="negrita-r">
+                    Grupo
+                    {{grupo.nombreGrupo}}
+                </span>
+                
+                <div class="integrante" ng-repeat="integrante in grupo.integrantes">
+                    {{integrante.nombre}} {{integrante.apellido}}
+                    <br>
+                </div>
             </li>
         </ul>
         <h5 style="text-align: center">Click en un grupo para ver mas claro</h5>

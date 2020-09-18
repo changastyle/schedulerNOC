@@ -33,6 +33,7 @@
             $scope.init = function()
             {
                 $scope.mesYAnioActual();
+                $scope.findGrupos();
             }
             
             $scope.grupoSeleccionado = null;
@@ -70,6 +71,24 @@
                         console.log("res nvo calendario: " + JSON.stringify(resultado));
                         $scope.estructura = resultado;
                         $scope.cargando = false;
+                        $scope.$evalAsync();
+                    }
+                });
+            }
+            $scope.findGrupos = function()
+            {
+                $.ajax(
+                {
+                    url:"../../findGrupos",
+                    beforeSend: function (xhr) 
+                    {
+                        $scope.estructura = {};
+                        $scope.cargandoGrupos = true;
+                    },
+                    success: function (resultado, textStatus, jqXHR) 
+                    {
+                        $scope.arrGrupos = resultado;
+                        $scope.cargandoGrupos = false;
                         $scope.$evalAsync();
                     }
                 });
@@ -134,6 +153,7 @@
         .contenido-principal
         {
             background-color:white;
+            margin-bottom: 50px;
         }
     </style>
     <style>
@@ -141,7 +161,7 @@
         {
             //border:solid 2px black;
             padding-top:25px;
-            padding-bottom:25px;
+            padding-bottom:6px;
             text-align: center;
         }
         .flechas-date
@@ -176,18 +196,10 @@
     <style>
         .semana
         {
-            margin-bottom: 12px;
+            margin-bottom: 6px;
             //border:solid 2px red;
         }
-        .dias
-        {
-            
-            display: inline-block;
-            overflow: hidden;
-            width: calc(100% / 7 );
-            height: 200px;
-            //border:solid 1px red;
-        }
+        
         .dia-mes-pasado
         {
             background-color: lightgray;
@@ -199,7 +211,7 @@
             color:white;
             //background-color: #e67e22;
             background-color: #16A085;
-            padding: 12px;
+            padding: 6px;
         }
     </style>
 </html>

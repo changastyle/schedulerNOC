@@ -6,7 +6,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 import json.Dia;
+import model.Grupo;
 import nuevo.Mes;
 import nuevo.Semana;
 import org.eclipse.persistence.jpa.jpql.parser.DateTime;
@@ -153,5 +155,13 @@ public class wsHorario {
             case 12: nombreMes = "Enero"; break;
         }  
         return nombreMes;
+    }
+    
+    @RequestMapping(value="findGrupos")
+    public static List<Grupo> findGrupos()
+    {
+        List<Grupo> arrGrupos = controller.Controller.armarTeams();
+        
+        return arrGrupos;
     }
 }
